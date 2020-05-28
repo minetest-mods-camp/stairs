@@ -25,4 +25,5 @@ Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
 
 Note: This mod has been changed by TenPlus1 to include other blocks from different mods as well as corner stairs and slopes... Holding sneak when placing will copy the rotation of the block pointed at to the newly placed stair.
 
-Nodes with a light source will also have stairs using same light levels.
+Nodes with a light source will also have stairs using same light levels, also 
+nodes using alpha textures for transparency will copy over to stairs as well.

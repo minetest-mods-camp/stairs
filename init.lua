@@ -1,46 +1,54 @@
-stairs = {}
-stairs.mod = "redo"
 
-
+-- wool sounds
 function default.node_sound_wool_defaults(table)
+
 	table = table or {}
+
 	table.footstep = table.footstep or
 			{name = "wool_coat_movement", gain = 1.0}
 	table.dug = table.dug or
 			{name = "wool_coat_movement", gain = 0.25}
 	table.place = table.place or
 			{name = "default_place_node", gain = 1.0}
+
 	return table
 end
 
 
-stairs.wood = default.node_sound_wood_defaults()
-stairs.dirt = default.node_sound_dirt_defaults()
-stairs.stone = default.node_sound_stone_defaults()
-stairs.glass = default.node_sound_glass_defaults()
-stairs.leaves = default.node_sound_leaves_defaults()
-stairs.metal = default.node_sound_metal_defaults()
-stairs.wool = stairs.leaves
-if minetest.get_modpath("xanadu") then
-	stairs.wool = default.node_sound_wool_defaults()
-end
+stairs = {
+	mod = "redo",
+	wood = default.node_sound_wood_defaults(),
+	dirt = default.node_sound_dirt_defaults(),
+	stone = default.node_sound_stone_defaults(),
+	glass = default.node_sound_glass_defaults(),
+	leaves = default.node_sound_leaves_defaults(),
+	metal = default.node_sound_metal_defaults(),
+	wool = default.node_sound_wool_defaults()
+}
 
 
 -- cache creative
 local creative = minetest.settings:get_bool("creative_mode")
+
 function is_creative_enabled_for(name)
+
 	if creative or minetest.check_player_privs(name, {creative = true}) then
 		return true
 	end
+
 	return false
 end
 
 
 -- process textures
 local set_textures = function(images)
+
 	local stair_images = {}
+
 	for i, image in ipairs(images) do
+
 		if type(image) == "string" then
+
 			stair_images[i] = {
 				name = image,
 				backface_culling = true,
@@ -48,14 +56,17 @@ local set_textures = function(images)
 			}
 		else
 			stair_images[i] = table.copy(image)
+
 			if stair_images[i].backface_culling == nil then
 				stair_images[i].backface_culling = true
 			end
+
 			if stair_images[i].align_style == nil then
 				stair_images[i].align_style = "world"
 			end
 		end
 	end
+
 	return stair_images
 end
 
@@ -82,7 +93,10 @@ local stair_place = function(itemstack, placer, pointed_thing, stair_node)
 		if minetest.get_item_group(node_u.name, "stair") > 0
 		or minetest.get_item_group(node_u.name, "slab") > 0 then
 
-			minetest.set_node(pos_a, {name = stair_node, param2 = node_u.param2})
+			minetest.set_node(pos_a, {
+				name = stair_node,
+				param2 = node_u.param2
+			})
 
 			if not is_creative_enabled_for(name) then
 				itemstack:take_item()
@@ -99,7 +113,8 @@ local stair_place = function(itemstack, placer, pointed_thing, stair_node)
 	return itemstack
 end
 
-local function get_light_source(nodename)
+
+local function get_light(nodename)
 
 	local def = minetest.registered_nodes[nodename]
 
@@ -110,10 +125,26 @@ local function get_light_source(nodename)
 	return nil
 end
 
+
+local function get_alpha(nodename)
+
+	local def = minetest.registered_nodes[nodename]
+
+	if def and def.use_texture_alpha then
+		return def.use_texture_alpha
+	end
+
+	return nil
+end
+
+
 -- Node will be called stairs:stair_<subname>
-function stairs.register_stair(subname, recipeitem, groups, images, description, snds, alpha)
+function stairs.register_stair(
+		subname, recipeitem, groups, images, description, snds)
+
 	local stair_images = set_textures(images)
 	local new_groups = table.copy(groups)
+
 	new_groups.stair = 1
 
 	minetest.register_node(":stairs:stair_" .. subname, {
@@ -123,8 +154,8 @@ function stairs.register_stair(subname, recipeitem, groups, images, description,
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = get_light_source(recipeitem),
+		use_texture_alpha = get_alpha(recipeitem),
+		light_source = get_light(recipeitem),
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -135,6 +166,7 @@ function stairs.register_stair(subname, recipeitem, groups, images, description,
 			},
 		},
 		on_place = function(itemstack, placer, pointed_thing)
+
 			return stair_place(itemstack, placer, pointed_thing,
 					"stairs:stair_" .. subname)
 		end,
@@ -167,9 +199,12 @@ end
 
 
 -- Node will be called stairs:slab_<subname>
-function stairs.register_slab(subname, recipeitem, groups, images, description, snds, alpha)
+function stairs.register_slab(
+		subname, recipeitem, groups, images, description, snds)
+
 	local slab_images = set_textures(images)
 	local new_groups = table.copy(groups)
+
 	new_groups.slab = 1
 
 	minetest.register_node(":stairs:slab_" .. subname, {
@@ -179,8 +214,8 @@ function stairs.register_slab(subname, recipeitem, groups, images, description, 
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = get_light_source(recipeitem),
+		use_texture_alpha = get_alpha(recipeitem),
+		light_source = get_light(recipeitem),
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -188,6 +223,7 @@ function stairs.register_slab(subname, recipeitem, groups, images, description, 
 			fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
 		},
 		on_place = function(itemstack, placer, pointed_thing)
+
 			return stair_place(itemstack, placer, pointed_thing,
 					"stairs:slab_" .. subname)
 		end,
@@ -218,9 +254,12 @@ end
 
 
 -- Node will be called stairs:stair_outer_<subname>
-function stairs.register_stair_outer(subname, recipeitem, groups, images, description, snds, alpha)
+function stairs.register_stair_outer(
+		subname, recipeitem, groups, images, description, snds)
+
 	local stair_images = set_textures(images)
 	local new_groups = table.copy(groups)
+
 	new_groups.stair = 1
 
 	minetest.register_node(":stairs:stair_outer_" .. subname, {
@@ -230,8 +269,8 @@ function stairs.register_stair_outer(subname, recipeitem, groups, images, descri
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = get_light_source(recipeitem),
+		use_texture_alpha = get_alpha(recipeitem),
+		light_source = get_light(recipeitem),
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -242,13 +281,15 @@ function stairs.register_stair_outer(subname, recipeitem, groups, images, descri
 			},
 		},
 		on_place = function(itemstack, placer, pointed_thing)
+
 			return stair_place(itemstack, placer, pointed_thing,
 					"stairs:stair_outer_" .. subname)
 		end,
 	})
 
 	-- add alias for old stairs redo name
-	minetest.register_alias("stairs:corner_" .. subname, "stairs:stair_outer_" .. subname)
+	minetest.register_alias("stairs:corner_" .. subname,
+			"stairs:stair_outer_" .. subname)
 
 	-- if no recipe item provided then skip craft recipes
 	if not recipeitem then
@@ -269,23 +310,30 @@ function stairs.register_stair_outer(subname, recipeitem, groups, images, descri
 	minetest.register_craft({
 		output = recipeitem .. " 2",
 		recipe = {
-			{"stairs:stair_outer_" .. subname, "stairs:stair_outer_" .. subname},
-			{"stairs:stair_outer_" .. subname, "stairs:stair_outer_" .. subname},
+			{"stairs:stair_outer_" .. subname,
+					"stairs:stair_outer_" .. subname},
+			{"stairs:stair_outer_" .. subname,
+					"stairs:stair_outer_" .. subname},
 		},
 	})
 end
 
 -- compatibility function for previous stairs:corner_<subname>
-function stairs.register_corner(subname, recipeitem, groups, images, description, snds, alpha)
-	stairs.register_stair_outer(subname, recipeitem, groups, images, description, snds, alpha)
+function stairs.register_corner(
+		subname, recipeitem, groups, images, description, snds)
+
+	stairs.register_stair_outer(
+			subname, recipeitem, groups, images, description, snds)
 end
 
 
 -- Node will be called stairs:stair_inner_<subname>
-function stairs.register_stair_inner(subname, recipeitem, groups, images, description, snds, alpha)
+function stairs.register_stair_inner(
+		subname, recipeitem, groups, images, description, snds)
 
 	local stair_images = set_textures(images)
 	local new_groups = table.copy(groups)
+
 	new_groups.stair = 1
 
 	minetest.register_node(":stairs:stair_inner_" .. subname, {
@@ -295,8 +343,8 @@ function stairs.register_stair_inner(subname, recipeitem, groups, images, descri
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = get_light_source(recipeitem),
+		use_texture_alpha = get_alpha(recipeitem),
+		light_source = get_light(recipeitem),
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -308,13 +356,15 @@ function stairs.register_stair_inner(subname, recipeitem, groups, images, descri
 			},
 		},
 		on_place = function(itemstack, placer, pointed_thing)
+
 			return stair_place(itemstack, placer, pointed_thing,
 					"stairs:stair_inner_" .. subname)
 		end,
 	})
 
 	-- add alias for old stairs redo name
-	minetest.register_alias("stairs:invcorner_" .. subname, "stairs:stair_inner_" .. subname)
+	minetest.register_alias("stairs:invcorner_" .. subname,
+			"stairs:stair_inner_" .. subname)
 
 	-- if no recipe item provided then skip craft recipes
 	if not recipeitem then
@@ -335,22 +385,30 @@ function stairs.register_stair_inner(subname, recipeitem, groups, images, descri
 	minetest.register_craft({
 		output = recipeitem .. " 3",
 		recipe = {
-			{"stairs:stair_inner_" .. subname, "stairs:stair_inner_" .. subname},
-			{"stairs:stair_inner_" .. subname, "stairs:stair_inner_" .. subname},
+			{"stairs:stair_inner_" .. subname,
+					"stairs:stair_inner_" .. subname},
+			{"stairs:stair_inner_" .. subname,
+					"stairs:stair_inner_" .. subname},
 		},
 	})
 end
 
 -- compatibility function for previous stairs:invcorner_<subname>
-function stairs.register_invcorner(subname, recipeitem, groups, images, description, snds, alpha)
-	stairs.register_stair_inner(subname, recipeitem, groups, images, description, snds, alpha)
+function stairs.register_invcorner(
+		subname, recipeitem, groups, images, description, snds)
+
+	stairs.register_stair_inner(
+			subname, recipeitem, groups, images, description, snds)
 end
 
 
 -- Node will be called stairs:slope_<subname>
-function stairs.register_slope(subname, recipeitem, groups, images, description, snds, alpha)
+function stairs.register_slope(
+		subname, recipeitem, groups, images, description, snds)
+
 	local stair_images = set_textures(images)
 	local new_groups = table.copy(groups)
+
 	new_groups.stair = 1
 
 	minetest.register_node(":stairs:slope_" .. subname, {
@@ -361,8 +419,8 @@ function stairs.register_slope(subname, recipeitem, groups, images, description,
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = get_light_source(recipeitem),
+		use_texture_alpha = get_alpha(recipeitem),
+		light_source = get_light(recipeitem),
 		groups = new_groups,
 		sounds = snds,
 		selection_box = {
@@ -405,19 +463,35 @@ end
 
 
 -- Nodes will be called stairs:{stair,slab}_<subname>
-function stairs.register_stair_and_slab(subname, recipeitem, groups, images,
-		desc_stair, desc_slab, sounds, alpha)
-	stairs.register_stair(subname, recipeitem, groups, images, desc_stair, sounds, alpha)
-	stairs.register_slab(subname, recipeitem, groups, images, desc_slab, sounds, alpha)
+function stairs.register_stair_and_slab(
+		subname, recipeitem, groups, images, desc_stair, desc_slab, sounds)
+
+	stairs.register_stair(
+			subname, recipeitem, groups, images, desc_stair, sounds)
+
+	stairs.register_slab(
+			subname, recipeitem, groups, images, desc_slab, sounds)
 end
 
+
 -- Nodes will be called stairs:{stair,slab,corner,invcorner,slope}_<subname>
-function stairs.register_all(subname, recipeitem, groups, images, desc, snds, alpha)
-	stairs.register_stair(subname, recipeitem, groups, images, desc, snds, alpha)
-	stairs.register_slab(subname, recipeitem, groups, images, desc, snds, alpha)
-	stairs.register_corner(subname, recipeitem, groups, images, desc, snds, alpha)
-	stairs.register_invcorner(subname, recipeitem, groups, images, desc, snds, alpha)
-	stairs.register_slope(subname, recipeitem, groups, images, desc, snds, alpha)
+function stairs.register_all(
+		subname, recipeitem, groups, images, desc, snds)
+
+	stairs.register_stair(
+			subname, recipeitem, groups, images, desc, snds)
+
+	stairs.register_slab(
+			subname, recipeitem, groups, images, desc, snds)
+
+	stairs.register_corner(
+			subname, recipeitem, groups, images, desc, snds)
+
+	stairs.register_invcorner(
+			subname, recipeitem, groups, images, desc, snds)
+
+	stairs.register_slope(
+			subname, recipeitem, groups, images, desc, snds)
 end
 
 
@@ -722,34 +796,8 @@ local colours = {
 	{"yellow",     "Yellow",     "#e3ff0070"},
 }
 
---= Coloured Blocks Mod
-if minetest.get_modpath("cblocks") then
-
-local col
-
-for i = 1, #colours, 1 do
-
-col = colours[i][1]
-
-stairs.register_all(colours[i][1] .. "_glass", "cblocks:glass_" .. colours[i][1],
-	{cracky = 3, oddly_breakable_by_hand = 3},
-	{"cblocks.png^[colorize:" .. colours[i][3]},
-	colours[i][2] .. " Glass",
-	stairs.glass, true)
-
-if col == "yellow" then col = "yellow2" end -- fixes ethereal yellow wood and cblocks yellow wood mixup
-
-stairs.register_all(col .. "_wood", "cblocks:wood_" .. colours[i][1],
-	{choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
-	{"default_wood.png^[colorize:" .. colours[i][3]},
-	colours[i][2] .. " Wooden",
-	stairs.wood)
-
-end --for
-
-end
-
 --= More Ores Mod
+
 if minetest.get_modpath("moreores") then
 
 grp = {cracky = 1, level = 2}
