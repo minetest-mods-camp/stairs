@@ -1,14 +1,11 @@
-Stairs Redo based on Minetest 0.4 mod: stairs
+Based on Minetest Game mod: stairs
+==================================
 
-License of source code:
------------------------
-Copyright (C) 2011-2012 Kahrl <kahrl@gmx.net>
-Copyright (C) 2011-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+Authors of source code
+----------------------
+Originally by Kahrl <kahrl@gmx.net> (LGPLv2.1+) and
+celeron55, Perttu Ahola <celeron55@gmail.com> (LGPLv2.1+)
+Various Minetest developers and contributors (LGPLv2.1+)
 
 http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -17,13 +14,7 @@ License of media (textures and sounds)
 Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
 http://creativecommons.org/licenses/by-sa/3.0/
 
-Authors of media files
------------------------
-Everything not listed in here:
-Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
-
-
-Note: This mod has been changed by TenPlus1 to include other blocks from different mods as well as corner stairs and slopes... Holding sneak when placing will copy the rotation of the block pointed at to the newly placed stair.
-
-Nodes with a light source will also have stairs using same light levels, also 
-nodes using alpha textures for transparency will copy over to stairs as well.
+Note: This mod has been amended to add new features like transparent and glowing
+stairs, sloped stairs, recipes to return stairs back into blocks and also to be
+used as fuel for furnaces, and alternative placement functions that use
+on_rotate and sneak key.

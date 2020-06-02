@@ -6,31 +6,31 @@ local grp = {} -- Helper
 -- Wood types
 
 stairs.register_all("wood", "default:wood",
-	{choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	{"default_wood.png"},
 	"Wooden",
 	stairs.wood, false)
 
 stairs.register_all("junglewood", "default:junglewood",
-	{choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	{"default_junglewood.png"},
 	"Jungle Wood",
 	stairs.wood, false)
 
 stairs.register_all("pine_wood", "default:pinewood",
-	{choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+	{choppy = 3, oddly_breakable_by_hand = 1, flammable = 3},
 	{"default_pine_wood.png"},
 	"Pine Wood",
 	stairs.wood, false)
 
 stairs.register_all("acacia_wood", "default:acacia_wood",
-	{choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+	{choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
 	{"default_acacia_wood.png"},
 	"Acacia Wood",
 	stairs.wood, false)
 
 stairs.register_all("aspen_wood", "default:aspen_wood",
-	{choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	{choppy = 3, oddly_breakable_by_hand = 2, flammable = 3},
 	{"default_aspen_wood.png"},
 	"Aspen Wood",
 	stairs.wood, false)
@@ -38,7 +38,7 @@ stairs.register_all("aspen_wood", "default:aspen_wood",
 -- Stone types
 
 stairs.register_all("stone", "default:stone",
-	{cracky=3,stone=1, },
+	{cracky = 3},
 	{"default_stone.png"},
 	"Stone",
 	stairs.stone, true)
@@ -74,7 +74,7 @@ stairs.register_all("desert_stone", "default:desert_stone",
 	stairs.stone, true)
 
 stairs.register_all("desert_stonebrick", "default:desert_stonebrick",
-	{cracky = 3},
+	{cracky = 2},
 	{"default_desert_stone_brick.png"},
 	"Desert Stone Brick",
 	stairs.stone, false)
@@ -156,13 +156,13 @@ stairs.register_all("obsidian", "default:obsidian",
 	stairs.stone, true)
 
 stairs.register_all("obsidianbrick", "default:obsidianbrick",
-	{cracky = 1, level = 3},
+	{cracky = 1, level = 2},
 	{"default_obsidian_brick.png"},
 	"Obsidian Brick",
 	stairs.stone, false)
 
 stairs.register_all("obsidian_block", "default:obsidian_block",
-	{cracky = 1, level = 3},
+	{cracky = 1, level = 2},
 	{"default_obsidian_block.png"},
 	"Obsidian block",
 	stairs.stone, true)
@@ -266,13 +266,13 @@ stairs.register_all("brick", "default:brick",
 	stairs.stone, false)
 
 stairs.register_all("snowblock", "default:snowblock",
-	{crumbly = 3, puts_out_fire = 1, cools_lava = 1, snowy = 1},
+	{crumbly = 3, cools_lava = 1, snowy = 1},
 	{"default_snow.png"},
 	"Snow Block",
 	default.node_sound_snow_defaults(), true)
 
 stairs.register_all("ice", "default:ice",
-	{cracky = 3, puts_out_fire = 1, cools_lava = 1},
+	{cracky = 3, cools_lava = 1},
 	{"default_ice.png"},
 	"Ice",
 	default.node_sound_glass_defaults(), true)

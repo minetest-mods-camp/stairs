@@ -141,6 +141,23 @@ local function get_alpha(nodename)
 end
 
 
+-- if recipeitem can be burned then stair can be as well
+local function set_burn(recipeitem, stair_name, v)
+
+	local burntime = minetest.get_craft_result({
+		method = "fuel", width = 1, items = {recipeitem} }).time
+
+	if burntime > 0 then
+
+		minetest.register_craft({
+			type = "fuel",
+			recipe = stair_name,
+			burntime = math.floor(burntime * v)
+		})
+	end
+end
+
+
 -- Node will be called stairs:stair_<subname>
 function stairs.register_stair(
 		subname, recipeitem, groups, images, description, snds, wat)
@@ -208,6 +225,8 @@ function stairs.register_stair(
 			{"stairs:stair_" .. subname, "stairs:stair_" .. subname}
 		}
 	})
+
+	set_burn(recipeitem, "stairs:stair_" .. subname, 0.75)
 end
 
 
@@ -264,6 +283,8 @@ function stairs.register_slab(
 			{"stairs:slab_" .. subname}
 		}
 	})
+
+	set_burn(recipeitem, "stairs:slab_" .. subname, 0.5)
 end
 
 
@@ -331,6 +352,8 @@ function stairs.register_stair_outer(
 					"stairs:stair_outer_" .. subname}
 		}
 	})
+
+	set_burn(recipeitem, "stairs:stair_outer_" .. subname, 0.625)
 end
 
 
@@ -408,6 +431,8 @@ function stairs.register_stair_inner(
 					"stairs:stair_inner_" .. subname}
 		}
 	})
+
+	set_burn(recipeitem, "stairs:stair_inner_" .. subname, 0.875)
 end
 
 
@@ -478,6 +503,8 @@ function stairs.register_slope(
 			{"stairs:slope_" .. subname, "stairs:slope_" .. subname}
 		}
 	})
+
+	set_burn(recipeitem, "stairs:slope_" .. subname, 0.5)
 end
 
 
