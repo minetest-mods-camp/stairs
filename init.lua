@@ -168,7 +168,7 @@ function stairs.register_stair(
 	new_groups.stair = 1
 
 	minetest.register_node(":stairs:stair_" .. subname, {
-		description = description .. " Stair",
+		description = description,
 		drawtype = "nodebox",
 		tiles = stair_images,
 		paramtype = "light",
@@ -240,7 +240,7 @@ function stairs.register_slab(
 	new_groups.slab = 1
 
 	minetest.register_node(":stairs:slab_" .. subname, {
-		description = description .. " Slab",
+		description = description,
 		drawtype = "nodebox",
 		tiles = slab_images,
 		paramtype = "light",
@@ -290,7 +290,7 @@ end
 
 -- Node will be called stairs:stair_outer_<subname>
 function stairs.register_stair_outer(
-		subname, recipeitem, groups, images, description, snds, wat)
+		subname, recipeitem, groups, images, description, snds, wat, fdesc)
 
 	local stair_images = set_textures(images, wat)
 	local new_groups = table.copy(groups)
@@ -298,7 +298,7 @@ function stairs.register_stair_outer(
 	new_groups.stair = 1
 
 	minetest.register_node(":stairs:stair_outer_" .. subname, {
-		description = "Outer " .. description .. " Stair",
+		description = fdesc or "Outer " .. description,
 		drawtype = "nodebox",
 		tiles = stair_images,
 		paramtype = "light",
@@ -357,18 +357,9 @@ function stairs.register_stair_outer(
 end
 
 
--- compatibility function for previous stairs:corner_<subname>
-function stairs.register_corner(
-		subname, recipeitem, groups, images, description, snds, wat)
-
-	stairs.register_stair_outer(
-			subname, recipeitem, groups, images, description, snds, wat)
-end
-
-
 -- Node will be called stairs:stair_inner_<subname>
 function stairs.register_stair_inner(
-		subname, recipeitem, groups, images, description, snds, wat)
+		subname, recipeitem, groups, images, description, snds, wat, fdesc)
 
 	local stair_images = set_textures(images, wat)
 	local new_groups = table.copy(groups)
@@ -376,7 +367,7 @@ function stairs.register_stair_inner(
 	new_groups.stair = 1
 
 	minetest.register_node(":stairs:stair_inner_" .. subname, {
-		description = "Inner " .. description .. " Stair",
+		description = fdesc or "Inner " .. description,
 		drawtype = "nodebox",
 		tiles = stair_images,
 		paramtype = "light",
@@ -436,15 +427,6 @@ function stairs.register_stair_inner(
 end
 
 
--- compatibility function for previous stairs:invcorner_<subname>
-function stairs.register_invcorner(
-		subname, recipeitem, groups, images, description, snds, wat)
-
-	stairs.register_stair_inner(
-			subname, recipeitem, groups, images, description, snds, wat)
-end
-
-
 -- Node will be called stairs:slope_<subname>
 function stairs.register_slope(
 		subname, recipeitem, groups, images, description, snds, wat)
@@ -455,7 +437,7 @@ function stairs.register_slope(
 	new_groups.stair = 1
 
 	minetest.register_node(":stairs:slope_" .. subname, {
-		description = description .. " Slope",
+		description = description,
 		drawtype = "mesh",
 		mesh = "stairs_slope.obj",
 		tiles = stair_images,
@@ -515,6 +497,12 @@ function stairs.register_stair_and_slab(
 	stairs.register_stair(
 			subname, recipeitem, groups, images, desc_stair, sounds, wat)
 
+	stairs.register_stair_inner(
+			subname, recipeitem, groups, images, desc_stair, sounds, wat)
+
+	stairs.register_stair_outer(
+			subname, recipeitem, groups, images, desc_stair, sounds, wat)
+
 	stairs.register_slab(
 			subname, recipeitem, groups, images, desc_slab, sounds, wat)
 end
@@ -525,26 +513,42 @@ function stairs.register_all(
 		subname, recipeitem, groups, images, desc, snds, wat)
 
 	stairs.register_stair(
-			subname, recipeitem, groups, images, desc, snds, wat)
+			subname, recipeitem, groups, images, desc .. " Stair", snds, wat)
 
 	stairs.register_slab(
-			subname, recipeitem, groups, images, desc, snds, wat)
+			subname, recipeitem, groups, images, desc .. " Slab", snds, wat)
 
-	stairs.register_corner(
-			subname, recipeitem, groups, images, desc, snds, wat)
+	stairs.register_stair_inner(
+			subname, recipeitem, groups, images, desc .. " Stair", snds, wat)
 
-	stairs.register_invcorner(
-			subname, recipeitem, groups, images, desc, snds, wat)
+	stairs.register_stair_outer(
+			subname, recipeitem, groups, images, desc .. " Stair", snds, wat)
 
 	stairs.register_slope(
-			subname, recipeitem, groups, images, desc, snds, wat)
+			subname, recipeitem, groups, images, desc .. " Slope", snds, wat)
+end
+
+
+-- compatibility function for previous stairs:invcorner_<subname>
+function stairs.register_invcorner(
+		subname, recipeitem, groups, images, desc, snds, wat)
+
+	stairs.register_stair_inner(
+			subname, recipeitem, groups, images, desc .. " Stair", snds, wat)
+end
+
+
+-- compatibility function for previous stairs:corner_<subname>
+function stairs.register_corner(
+		subname, recipeitem, groups, images, desc, snds, wat)
+
+	stairs.register_stair_outer(
+			subname, recipeitem, groups, images, desc .. " Stair", snds, wat)
 end
 
 
 -- Register stairs
-local path = minetest.get_modpath("stairs")
-
-dofile(path .. "/stairs.lua")
+dofile(minetest.get_modpath("stairs") .. "/stairs.lua")
 
 
 print ("[MOD] Stairs Redo loaded")
