@@ -431,6 +431,12 @@ stairs.register_all("stone6", "xanadu:stone6",
 	"Decorative Stone 6",
 	stairs.stone)
 
+stairs.register_all("sandstonebrick1", "xanadu:sandstonebrick1",
+	grp,
+	{"sandstonebrick1.png"},
+	"Decorative Sandstone 1",
+	stairs.stone)
+
 stairs.register_all("sandstonebrick4", "xanadu:sandstonebrick4",
 	grp,
 	{"sandstonebrick4.png"},
