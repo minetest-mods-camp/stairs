@@ -141,6 +141,18 @@ local function get_alpha(nodename)
 end
 
 
+local function get_propa(nodename)
+
+	local def = minetest.registered_nodes[nodename]
+
+	if def and def.sunlight_propagates then
+		return def.sunlight_propagates
+	end
+
+	return nil
+end
+
+
 -- if recipeitem can be burned then stair can be as well
 local function set_burn(recipeitem, stair_name, v)
 
@@ -176,6 +188,7 @@ function stairs.register_stair(
 		is_ground_content = false,
 		use_texture_alpha = get_alpha(recipeitem),
 		light_source = get_light(recipeitem),
+		sunlight_propagates = get_propa(recipeitem),
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -248,6 +261,7 @@ function stairs.register_slab(
 		is_ground_content = false,
 		use_texture_alpha = get_alpha(recipeitem),
 		light_source = get_light(recipeitem),
+		sunlight_propagates = get_propa(recipeitem),
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -306,6 +320,7 @@ function stairs.register_stair_outer(
 		is_ground_content = false,
 		use_texture_alpha = get_alpha(recipeitem),
 		light_source = get_light(recipeitem),
+		sunlight_propagates = get_propa(recipeitem),
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -375,6 +390,7 @@ function stairs.register_stair_inner(
 		is_ground_content = false,
 		use_texture_alpha = get_alpha(recipeitem),
 		light_source = get_light(recipeitem),
+		sunlight_propagates = get_propa(recipeitem),
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -446,6 +462,7 @@ function stairs.register_slope(
 		is_ground_content = false,
 		use_texture_alpha = get_alpha(recipeitem),
 		light_source = get_light(recipeitem),
+		sunlight_propagates = get_propa(recipeitem),
 		groups = new_groups,
 		sounds = snds,
 		selection_box = {
