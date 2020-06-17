@@ -117,39 +117,16 @@ local stair_place = function(itemstack, placer, pointed_thing, stair_node)
 end
 
 
-local function get_light(nodename)
+-- get node settings to use for stairs
+local function get_node_vars(nodename)
 
 	local def = minetest.registered_nodes[nodename]
 
-	if def and def.light_source then
-		return def.light_source
+	if def then
+		return def.light_source, def.use_texture_alpha, def.sunlight_propagates
 	end
 
-	return nil
-end
-
-
-local function get_alpha(nodename)
-
-	local def = minetest.registered_nodes[nodename]
-
-	if def and def.use_texture_alpha then
-		return def.use_texture_alpha
-	end
-
-	return nil
-end
-
-
-local function get_propa(nodename)
-
-	local def = minetest.registered_nodes[nodename]
-
-	if def and def.sunlight_propagates then
-		return def.sunlight_propagates
-	end
-
-	return nil
+	return nil, nil, nil
 end
 
 
@@ -179,6 +156,8 @@ function stairs.register_stair(
 
 	new_groups.stair = 1
 
+	local light, alpha, propa = get_node_vars(recipeitem)
+
 	minetest.register_node(":stairs:stair_" .. subname, {
 		description = description,
 		drawtype = "nodebox",
@@ -186,9 +165,9 @@ function stairs.register_stair(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = get_alpha(recipeitem),
-		light_source = get_light(recipeitem),
-		sunlight_propagates = get_propa(recipeitem),
+		use_texture_alpha = alpha,
+		light_source = light,
+		sunlight_propagates = propa,
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -252,6 +231,8 @@ function stairs.register_slab(
 
 	new_groups.slab = 1
 
+	local light, alpha, propa = get_node_vars(recipeitem)
+
 	minetest.register_node(":stairs:slab_" .. subname, {
 		description = description,
 		drawtype = "nodebox",
@@ -259,9 +240,9 @@ function stairs.register_slab(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = get_alpha(recipeitem),
-		light_source = get_light(recipeitem),
-		sunlight_propagates = get_propa(recipeitem),
+		use_texture_alpha = alpha,
+		light_source = light,
+		sunlight_propagates = propa,
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -311,6 +292,8 @@ function stairs.register_stair_outer(
 
 	new_groups.stair = 1
 
+	local light, alpha, propa = get_node_vars(recipeitem)
+
 	minetest.register_node(":stairs:stair_outer_" .. subname, {
 		description = fdesc or "Outer " .. description,
 		drawtype = "nodebox",
@@ -318,9 +301,9 @@ function stairs.register_stair_outer(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = get_alpha(recipeitem),
-		light_source = get_light(recipeitem),
-		sunlight_propagates = get_propa(recipeitem),
+		use_texture_alpha = alpha,
+		light_source = light,
+		sunlight_propagates = propa,
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -381,6 +364,8 @@ function stairs.register_stair_inner(
 
 	new_groups.stair = 1
 
+	local light, alpha, propa = get_node_vars(recipeitem)
+
 	minetest.register_node(":stairs:stair_inner_" .. subname, {
 		description = fdesc or "Inner " .. description,
 		drawtype = "nodebox",
@@ -388,9 +373,9 @@ function stairs.register_stair_inner(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = get_alpha(recipeitem),
-		light_source = get_light(recipeitem),
-		sunlight_propagates = get_propa(recipeitem),
+		use_texture_alpha = alpha,
+		light_source = light,
+		sunlight_propagates = propa,
 		groups = new_groups,
 		sounds = snds,
 		node_box = {
@@ -452,6 +437,8 @@ function stairs.register_slope(
 
 	new_groups.stair = 1
 
+	local light, alpha, propa = get_node_vars(recipeitem)
+
 	minetest.register_node(":stairs:slope_" .. subname, {
 		description = description,
 		drawtype = "mesh",
@@ -460,9 +447,9 @@ function stairs.register_slope(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = get_alpha(recipeitem),
-		light_source = get_light(recipeitem),
-		sunlight_propagates = get_propa(recipeitem),
+		use_texture_alpha = alpha,
+		light_source = light,
+		sunlight_propagates = propa,
 		groups = new_groups,
 		sounds = snds,
 		selection_box = {
