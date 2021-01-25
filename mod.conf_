@@ -1,4 +1,3 @@
 name = stairs
 depends = default
-optional_depends =
 description = Adds stairs, slabs, inner and outer corners and slopes.
