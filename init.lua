@@ -494,6 +494,140 @@ function stairs.register_slope(
 end
 
 
+-- Node will be called stairs:slope_inner_<subname>
+function stairs.register_slope_inner(
+		subname, recipeitem, groups, images, description, snds, wat)
+
+	local stair_images = set_textures(images, wat)
+	local new_groups = table.copy(groups)
+
+	new_groups.stair = 1
+
+	local light, alpha, propa = get_node_vars(recipeitem)
+
+	minetest.register_node(":stairs:slope_inner_" .. subname, {
+		description = description,
+		drawtype = "mesh",
+		mesh = "stairs_slope_inner.obj",
+		tiles = stair_images,
+		paramtype = "light",
+		paramtype2 = "facedir",
+		is_ground_content = false,
+		use_texture_alpha = alpha,
+		light_source = light,
+		sunlight_propagates = propa,
+		groups = new_groups,
+		sounds = snds,
+		selection_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5, -0.5, -0.5, 0.5, 0, 0.5},
+				{-0.5, 0, 0, 0.5, 0.5, 0.5},
+				{-0.5, 0, -0.5, 0, 0.5, 0}
+			}
+		},
+		collision_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5, -0.5, -0.5, 0.5, 0, 0.5},
+				{-0.5, 0, 0, 0.5, 0.5, 0.5},
+				{-0.5, 0, -0.5, 0, 0.5, 0}
+			}
+		},
+
+		on_place = function(itemstack, placer, pointed_thing)
+			return stair_place(itemstack, placer, pointed_thing,
+					"stairs:slope_inner_" .. subname)
+		end
+	})
+
+	-- slope recipe
+	minetest.register_craft({
+		output = "stairs:slope_inner_" .. subname .. " 6",
+		recipe = {
+			{"", recipeitem, recipeitem},
+			{recipeitem, recipeitem, recipeitem}
+		}
+	})
+
+	-- slope to original material recipe
+	minetest.register_craft({
+		output = recipeitem,
+		recipe = {
+			{"stairs:slope_inner_" .. subname, "stairs:slope_inner_" .. subname}
+		}
+	})
+
+	set_burn(recipeitem, "stairs:slope_inner_" .. subname, 0.5)
+end
+
+
+-- Node will be called stairs:slope_outer_<subname>
+function stairs.register_slope_outer(
+		subname, recipeitem, groups, images, description, snds, wat)
+
+	local stair_images = set_textures(images, wat)
+	local new_groups = table.copy(groups)
+
+	new_groups.stair = 1
+
+	local light, alpha, propa = get_node_vars(recipeitem)
+
+	minetest.register_node(":stairs:slope_outer_" .. subname, {
+		description = description,
+		drawtype = "mesh",
+		mesh = "stairs_slope_outer.obj",
+		tiles = stair_images,
+		paramtype = "light",
+		paramtype2 = "facedir",
+		is_ground_content = false,
+		use_texture_alpha = alpha,
+		light_source = light,
+		sunlight_propagates = propa,
+		groups = new_groups,
+		sounds = snds,
+		selection_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5, -0.5, -0.5, 0.5, 0, 0.5},
+				{-0.5, 0, 0, 0, 0.5, 0.5}
+			},
+		},
+		collision_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5, -0.5, -0.5, 0.5, 0, 0.5},
+				{-0.5, 0, 0, 0, 0.5, 0.5}
+			},
+		},
+
+		on_place = function(itemstack, placer, pointed_thing)
+			return stair_place(itemstack, placer, pointed_thing,
+					"stairs:slope_outer_" .. subname)
+		end
+	})
+
+	-- slope recipe
+	minetest.register_craft({
+		output = "stairs:slope_outer_" .. subname .. " 6",
+		recipe = {
+			{"", "", recipeitem},
+			{"", recipeitem, recipeitem}
+		}
+	})
+
+	-- slope to original material recipe
+	minetest.register_craft({
+		output = recipeitem,
+		recipe = {
+			{"stairs:slope_outer_" .. subname, "stairs:slope_outer_" .. subname}
+		}
+	})
+
+	set_burn(recipeitem, "stairs:slope_outer_" .. subname, 0.5)
+end
+
+
 -- Nodes will be called stairs:{stair,slab}_<subname>
 function stairs.register_stair_and_slab(
 		subname, recipeitem, groups, images, desc_stair, desc_slab, sounds, wat)
@@ -529,6 +663,12 @@ function stairs.register_all(
 			subname, recipeitem, groups, images, desc .. " Stair", snds, wat)
 
 	stairs.register_slope(
+			subname, recipeitem, groups, images, desc .. " Slope", snds, wat)
+
+	stairs.register_slope_inner(
+			subname, recipeitem, groups, images, desc .. " Slope", snds, wat)
+
+	stairs.register_slope_outer(
 			subname, recipeitem, groups, images, desc .. " Slope", snds, wat)
 end
 
