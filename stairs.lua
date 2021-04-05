@@ -497,6 +497,17 @@ stairs.register_all("bred2", "xanadu:red2",
 	"Decorative baked red clay 2",
 	stairs.stone)
 
+stairs.register_all("compressed_cobble", "xanadu:compressed_cobble",
+	{cracky = 3, level = 2},
+	{"compressed_cobble.png"},
+	"Compressed Cobble",
+	stairs.stone)
+
+stairs.register_all("compressed_dirt", "xanadu:compressed_dirt",
+	{crumbly = 2},
+	{"compressed_dirt.png"},
+	"Compressed Dirt",
+	stairs.stone)
 end
 
 --= Castle Mod
