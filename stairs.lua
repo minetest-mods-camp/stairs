@@ -508,7 +508,26 @@ stairs.register_all("compressed_dirt", "xanadu:compressed_dirt",
 	{"compressed_dirt.png"},
 	"Compressed Dirt",
 	stairs.stone)
+
+stairs.register_slope("steelblock1", "xanadu:steelblock1",
+	{cracky = 1, level = 2},
+	{"steel_block1.png"},
+	"Decorative Steelblock 1",
+	stairs.steel)
+
+stairs.register_slab("steelblock3", "xanadu:steelblock3",
+	{cracky = 1, level = 2},
+	{"steel_block3.png"},
+	"Decorative Steelblock 3",
+	stairs.steel)
+
+stairs.register_slope("steelblock5", "xanadu:steelblock5",
+	{cracky = 1, level = 2},
+	{"steel_block5.png"},
+	"Decorative Steelblock 5",
+	stairs.steel)
 end
+
 
 --= Castle Mod
 
