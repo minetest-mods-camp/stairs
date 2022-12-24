@@ -281,6 +281,10 @@ stairs.register_all("ice", "default:ice",
 	"Ice",
 	default.node_sound_glass_defaults(), true)
 
+--- Register all 3rd party mod stairs after all mods are loaded
+minetest.register_on_mods_loaded(function()
+---
+
 --= More Ores Mod
 
 if minetest.get_modpath("moreores") then
@@ -515,6 +519,12 @@ stairs.register_all("compressed_dirt", "xanadu:compressed_dirt",
 	"Compressed Dirt",
 	stairs.stone)
 
+stairs.register_all("goldblock1", "xanadu:goldblock1",
+	{cracky = 1},
+	{"gold_block1.png"},
+	"Decorative Goldblock 1",
+	stairs.steel)
+
 stairs.register_slope("steelblock1", "xanadu:steelblock1",
 	{cracky = 1, level = 2},
 	{"steel_block1.png"},
@@ -532,6 +542,12 @@ stairs.register_slope("steelblock5", "xanadu:steelblock5",
 	{"steel_block5.png"},
 	"Decorative Steelblock 5",
 	stairs.steel)
+
+stairs.register_slab("sandstone4", "xanadu:sandstone4",
+	{crumbly = 2, cracky = 3},
+	{"sandstone4.png"},
+	"Decorative sandstone 4 slab",
+	stairs.stone)
 end
 
 
@@ -588,3 +604,7 @@ stairs.register_all("wool_" .. colours[i][1], "wool:" .. colours[i][1],
 end -- END for
 
 end
+
+--- END of waiting for all 3rd party mods to load
+end)
+---
