@@ -247,19 +247,177 @@ stairs.register_all("diamondblock", "default:diamondblock",
 	"Diamond",
 	stairs.stone)
 
--- Glass types
+-- Glass (stairs registered seperately to use special texture)
 
-stairs.register_all("glass", "default:glass",
-	{cracky = 3, oddly_breakable_by_hand = 3},
+--stairs.register_all("glass", "default:glass",
+--	{cracky = 3, oddly_breakable_by_hand = 3},
+--	{"default_glass.png"},
+--	"Glass",
+--	stairs.glass)
+
+tmp = {cracky = 3, oddly_breakable_by_hand = 3}
+
+stairs.register_stair(
+	"glass",
+	"default:glass",
+	tmp,
+	{
+		"stairs_glass_quarter.png",
+		"default_glass.png",
+		"stairs_glass_quarter.png",
+		"stairs_glass_quarter.png",
+		"default_glass.png",
+		"stairs_glass_quarter.png"
+	},
+	"Glass Stair",
+	stairs.glass,
+	false
+)
+
+stairs.register_slab(
+	"glass",
+	"default:glass",
+	tmp,
+	{
+		"default_glass.png",
+		"default_glass.png",
+		"stairs_glass_quarter.png"
+	},
+	"Glass Slab",
+	stairs.glass,
+	false
+)
+
+stairs.register_stair_inner(
+	"glass",
+	"default:glass",
+	tmp,
+	{
+		"stairs_glass_quarter.png",
+		"default_glass.png",
+		"stairs_glass_quarter.png",
+		"default_glass.png",
+		"default_glass.png",
+		"stairs_glass_quarter.png"
+	},
+	"",
+	stairs.glass,
+	false,
+	"Inner Glass Stair"
+)
+
+stairs.register_stair_outer(
+	"glass",
+	"default:glass",
+	tmp,
+	{
+		"stairs_glass_quarter.png",
+		"default_glass.png",
+		"stairs_glass_quarter.png",
+		"stairs_glass_quarter.png",
+		"stairs_glass_quarter.png",
+		"stairs_glass_quarter.png"
+	},
+	"",
+	stairs.glass,
+	false,
+	"Outer Glass Stair"
+)
+
+stairs.register_slope(
+	"glass",
+	"default:glass",
+	tmp,
 	{"default_glass.png"},
-	"Glass",
-	stairs.glass)
+	"Glass Slope",
+	stairs.glass
+)
 
-stairs.register_all("obsidian_glass", "default:obsidian_glass",
-	{cracky = 2},
+-- Obsidian Glass (stairs registered seperately to use special texture)
+
+--stairs.register_all("obsidian_glass", "default:obsidian_glass",
+--	{cracky = 2},
+--	{"default_obsidian_glass.png"},
+--	"Obsidian Glass",
+--	stairs.glass)
+
+tmp = {cracky = 2}
+
+stairs.register_stair(
+	"obsidian_glass",
+	"default:obsidian_glass",
+	tmp,
+	{
+		"stairs_obsidian_glass_quarter.png",
+		"default_obsidian_glass.png",
+		"stairs_obsidian_glass_quarter.png",
+		"stairs_obsidian_glass_quarter.png",
+		"default_obsidian_glass.png",
+		"stairs_obsidian_glass_quarter.png"
+	},
+	"Obsidian Glass Stair",
+	stairs.glass,
+	false
+)
+
+stairs.register_slab(
+	"obsidian_glass",
+	"default:obsidian_glass",
+	tmp,
+	{
+		"default_obsidian_glass.png",
+		"default_obsidian_glass.png",
+		"stairs_obsidian_glass_quarter.png"
+	},
+	"Obsidian Glass Slab",
+	stairs.glass,
+	false
+)
+
+stairs.register_stair_inner(
+	"obsidian_glass",
+	"default:obsidian_glass",
+	tmp,
+	{
+		"stairs_obsidian_glass_quarter.png",
+		"default_obsidian_glass.png",
+		"stairs_obsidian_glass_quarter.png",
+		"default_obsidian_glass.png",
+		"default_obsidian_glass.png",
+		"stairs_obsidian_glass_quarter.png"
+	},
+	"",
+	stairs.glass,
+	false,
+	"Inner Obsidian Glass Stair"
+)
+
+stairs.register_stair_outer(
+	"obsidian_glass",
+	"default:obsidian_glass",
+	tmp,
+	{
+		"stairs_obsidian_glass_quarter.png",
+		"default_obsidian_glass.png",
+		"stairs_obsidian_glass_quarter.png",
+		"stairs_obsidian_glass_quarter.png",
+		"stairs_obsidian_glass_quarter.png",
+		"stairs_obsidian_glass_quarter.png"
+	},
+	"",
+	stairs.glass,
+	false,
+	"Outer Obsidian Glass Stair"
+)
+
+stairs.register_slope(
+	"obsidian_glass",
+	"default:obsidian_glass",
+	tmp,
 	{"default_obsidian_glass.png"},
-	"Obsidian Glass",
-	stairs.glass)
+	"Obsidian Glass Slope",
+	stairs.glass
+)
 
 -- Brick, Snow and Ice
 

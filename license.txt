@@ -19,3 +19,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+Textures
+--------
+
+  Derived from a texture by PilzAdam (CC BY-SA 3.0):
+    stairs_obsidian_glass_quarter.png
+
+  Derived from a texture by celeron55 (CC BY-SA 3.0):
+    stairs_glass_quarter.png
