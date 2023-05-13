@@ -247,6 +247,9 @@ stairs.register_all("diamondblock", "default:diamondblock",
 	"Diamond",
 	stairs.stone)
 
+-- Setting to show glass stair sides
+local gsides = minetest.settings:get_bool("stairs.glass_sides") ~= false
+
 -- Glass (stairs registered seperately to use special texture)
 
 --stairs.register_all("glass", "default:glass",
@@ -257,18 +260,14 @@ stairs.register_all("diamondblock", "default:diamondblock",
 
 tmp = {cracky = 3, oddly_breakable_by_hand = 3}
 
+local face_tex = "default_glass.png"
+local side_tex = gsides and "stairs_glass_quarter.png" or face_tex
+
 stairs.register_stair(
 	"glass",
 	"default:glass",
 	tmp,
-	{
-		"stairs_glass_quarter.png",
-		"default_glass.png",
-		"stairs_glass_quarter.png",
-		"stairs_glass_quarter.png",
-		"default_glass.png",
-		"stairs_glass_quarter.png"
-	},
+	{side_tex, face_tex, side_tex, side_tex, face_tex, side_tex},
 	"Glass Stair",
 	stairs.glass,
 	false
@@ -278,11 +277,7 @@ stairs.register_slab(
 	"glass",
 	"default:glass",
 	tmp,
-	{
-		"default_glass.png",
-		"default_glass.png",
-		"stairs_glass_quarter.png"
-	},
+	{face_tex, face_tex, side_tex},
 	"Glass Slab",
 	stairs.glass,
 	false
@@ -292,14 +287,7 @@ stairs.register_stair_inner(
 	"glass",
 	"default:glass",
 	tmp,
-	{
-		"stairs_glass_quarter.png",
-		"default_glass.png",
-		"stairs_glass_quarter.png",
-		"default_glass.png",
-		"default_glass.png",
-		"stairs_glass_quarter.png"
-	},
+	{side_tex, face_tex, side_tex, face_tex, face_tex, side_tex},
 	"",
 	stairs.glass,
 	false,
@@ -310,14 +298,7 @@ stairs.register_stair_outer(
 	"glass",
 	"default:glass",
 	tmp,
-	{
-		"stairs_glass_quarter.png",
-		"default_glass.png",
-		"stairs_glass_quarter.png",
-		"stairs_glass_quarter.png",
-		"stairs_glass_quarter.png",
-		"stairs_glass_quarter.png"
-	},
+	{side_tex, face_tex, side_tex, side_tex, side_tex, side_tex},
 	"",
 	stairs.glass,
 	false,
@@ -328,7 +309,7 @@ stairs.register_slope(
 	"glass",
 	"default:glass",
 	tmp,
-	{"default_glass.png"},
+	{face_tex},
 	"Glass Slope",
 	stairs.glass
 )
@@ -342,19 +323,14 @@ stairs.register_slope(
 --	stairs.glass)
 
 tmp = {cracky = 2}
+face_tex = "default_obsidian_glass.png"
+side_tex = gsides and "stairs_obsidian_glass_quarter.png" or face_tex
 
 stairs.register_stair(
 	"obsidian_glass",
 	"default:obsidian_glass",
 	tmp,
-	{
-		"stairs_obsidian_glass_quarter.png",
-		"default_obsidian_glass.png",
-		"stairs_obsidian_glass_quarter.png",
-		"stairs_obsidian_glass_quarter.png",
-		"default_obsidian_glass.png",
-		"stairs_obsidian_glass_quarter.png"
-	},
+	{side_tex, face_tex, side_tex, side_tex, face_tex, side_tex},
 	"Obsidian Glass Stair",
 	stairs.glass,
 	false
@@ -364,11 +340,7 @@ stairs.register_slab(
 	"obsidian_glass",
 	"default:obsidian_glass",
 	tmp,
-	{
-		"default_obsidian_glass.png",
-		"default_obsidian_glass.png",
-		"stairs_obsidian_glass_quarter.png"
-	},
+	{face_tex, face_tex, side_tex},
 	"Obsidian Glass Slab",
 	stairs.glass,
 	false
@@ -378,14 +350,7 @@ stairs.register_stair_inner(
 	"obsidian_glass",
 	"default:obsidian_glass",
 	tmp,
-	{
-		"stairs_obsidian_glass_quarter.png",
-		"default_obsidian_glass.png",
-		"stairs_obsidian_glass_quarter.png",
-		"default_obsidian_glass.png",
-		"default_obsidian_glass.png",
-		"stairs_obsidian_glass_quarter.png"
-	},
+	{side_tex, face_tex, side_tex, face_tex, face_tex, side_tex},
 	"",
 	stairs.glass,
 	false,
@@ -396,14 +361,7 @@ stairs.register_stair_outer(
 	"obsidian_glass",
 	"default:obsidian_glass",
 	tmp,
-	{
-		"stairs_obsidian_glass_quarter.png",
-		"default_obsidian_glass.png",
-		"stairs_obsidian_glass_quarter.png",
-		"stairs_obsidian_glass_quarter.png",
-		"stairs_obsidian_glass_quarter.png",
-		"stairs_obsidian_glass_quarter.png"
-	},
+	{side_tex, face_tex, side_tex, side_tex, side_tex, side_tex},
 	"",
 	stairs.glass,
 	false,
@@ -414,7 +372,7 @@ stairs.register_slope(
 	"obsidian_glass",
 	"default:obsidian_glass",
 	tmp,
-	{"default_obsidian_glass.png"},
+	{face_tex},
 	"Obsidian Glass Slope",
 	stairs.glass
 )

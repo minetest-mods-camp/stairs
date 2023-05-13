@@ -1,0 +1,1 @@
+stairs.glass_sides (Show glass stair side texture) bool true

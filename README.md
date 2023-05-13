@@ -17,12 +17,16 @@ that use on_rotate and sneak key.
 Tech information
 ----------------
 
-This mod sustitute default one, you must disable the default of minetest
-game if present or override it.
+This mod replaces the default stairs mod and is fully api compatible.
 
 #### Dependencies
 
 * default
+
+### Settings
+
+'stairs.show_sides' True by default it uses separate side textures for
+                    glass and obsidian glass stairs to look more solid.
 
 License
 -------
