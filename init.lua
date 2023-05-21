@@ -11,6 +11,7 @@ function default.node_sound_wool_defaults(table)
 	return table
 end
 
+
 -- add new 5.x snow sounds to 0.4.x client
 if not minetest.has_feature("object_use_texture_alpha") then
 
@@ -61,10 +62,7 @@ local set_textures = function(images, worldaligntex)
 
 		if type(image) == "string" then
 
-			stair_images[i] = {
-				name = image,
-				backface_culling = true
-			}
+			stair_images[i] = {name = image, backface_culling = true}
 
 			if worldaligntex then
 				stair_images[i].align_style = "world"
@@ -97,8 +95,7 @@ local stair_place = function(itemstack, placer, pointed_thing, stair_node)
 		local node_a = minetest.get_node(pos_a)
 		local def_a = minetest.registered_nodes[node_a.name]
 
-		if not def_a.buildable_to
-		or minetest.is_protected(pos_a, name) then
+		if not def_a.buildable_to or minetest.is_protected(pos_a, name) then
 			return itemstack
 		end
 
@@ -129,19 +126,7 @@ local stair_place = function(itemstack, placer, pointed_thing, stair_node)
 end
 
 
--- get node settings to use for stairs
-local function get_node_vars(nodename)
-
-	local def = minetest.registered_nodes[nodename] or {}
-
-	return 	def.light_source,
-			def.use_texture_alpha,
-			def.sunlight_propagates,
-			def.sounds
-end
-
-
--- if recipeitem can be burned then stair can be as well
+-- if recipeitem can be burned then stair can also
 local function set_burn(recipeitem, stair_name, v)
 
 	local burntime = minetest.get_craft_result({
@@ -167,7 +152,7 @@ function stairs.register_stair(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa, soun = get_node_vars(recipeitem)
+	local def = minetest.registered_nodes[recipeitem]
 
 	minetest.register_node(":stairs:stair_" .. subname, {
 		description = description,
@@ -176,11 +161,11 @@ function stairs.register_stair(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = light,
-		sunlight_propagates = propa,
+		use_texture_alpha = def.use_texture_alpha,
+		light_source = def.light_source,
+		sunlight_propagates = def.sunlight_propagates,
 		groups = new_groups,
-		sounds = snds or soun,
+		sounds = snds or def.sounds,
 		node_box = {
 			type = "fixed",
 			fixed = {
@@ -190,9 +175,8 @@ function stairs.register_stair(
 		},
 
 		on_place = function(itemstack, placer, pointed_thing)
-
-			return stair_place(itemstack, placer, pointed_thing,
-					"stairs:stair_" .. subname)
+			return stair_place(
+					itemstack, placer, pointed_thing, "stairs:stair_" .. subname)
 		end
 	})
 
@@ -242,7 +226,7 @@ function stairs.register_slab(
 
 	new_groups.slab = 1
 
-	local light, alpha, propa, soun = get_node_vars(recipeitem)
+	local def = minetest.registered_nodes[recipeitem]
 
 	minetest.register_node(":stairs:slab_" .. subname, {
 		description = description,
@@ -251,11 +235,11 @@ function stairs.register_slab(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = light,
-		sunlight_propagates = propa,
+		use_texture_alpha = def.use_texture_alpha,
+		light_source = def.light_source,
+		sunlight_propagates = def.sunlight_propagates,
 		groups = new_groups,
-		sounds = snds or soun,
+		sounds = snds or def.sounds,
 		node_box = {
 			type = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5}
@@ -263,8 +247,8 @@ function stairs.register_slab(
 
 		on_place = function(itemstack, placer, pointed_thing)
 
-			return stair_place(itemstack, placer, pointed_thing,
-					"stairs:slab_" .. subname)
+			return stair_place(
+					itemstack, placer, pointed_thing, "stairs:slab_" .. subname)
 		end
 	})
 
@@ -303,7 +287,7 @@ function stairs.register_stair_outer(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa, soun = get_node_vars(recipeitem)
+	local def = minetest.registered_nodes[recipeitem]
 
 	minetest.register_node(":stairs:stair_outer_" .. subname, {
 		description = fdesc or "Outer " .. description,
@@ -312,11 +296,11 @@ function stairs.register_stair_outer(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = light,
-		sunlight_propagates = propa,
+		use_texture_alpha = def.use_texture_alpha,
+		light_source = def.light_source,
+		sunlight_propagates = def.sunlight_propagates,
 		groups = new_groups,
-		sounds = snds or soun,
+		sounds = snds or def.sounds,
 		node_box = {
 			type = "fixed",
 			fixed = {
@@ -327,8 +311,8 @@ function stairs.register_stair_outer(
 
 		on_place = function(itemstack, placer, pointed_thing)
 
-			return stair_place(itemstack, placer, pointed_thing,
-					"stairs:stair_outer_" .. subname)
+			return stair_place(
+					itemstack, placer, pointed_thing, "stairs:stair_outer_" .. subname)
 		end
 	})
 
@@ -355,10 +339,8 @@ function stairs.register_stair_outer(
 	minetest.register_craft({
 		output = recipeitem .. " 2",
 		recipe = {
-			{"stairs:stair_outer_" .. subname,
-					"stairs:stair_outer_" .. subname},
-			{"stairs:stair_outer_" .. subname,
-					"stairs:stair_outer_" .. subname}
+			{"stairs:stair_outer_" .. subname, "stairs:stair_outer_" .. subname},
+			{"stairs:stair_outer_" .. subname, "stairs:stair_outer_" .. subname}
 		}
 	})
 
@@ -375,7 +357,7 @@ function stairs.register_stair_inner(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa, soun = get_node_vars(recipeitem)
+	local def = minetest.registered_nodes[recipeitem]
 
 	minetest.register_node(":stairs:stair_inner_" .. subname, {
 		description = fdesc or "Inner " .. description,
@@ -384,11 +366,11 @@ function stairs.register_stair_inner(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = light,
-		sunlight_propagates = propa,
+		use_texture_alpha = def.use_texture_alpha,
+		light_source = def.light_source,
+		sunlight_propagates = def.sunlight_propagates,
 		groups = new_groups,
-		sounds = snds or soun,
+		sounds = snds or def.sounds,
 		node_box = {
 			type = "fixed",
 			fixed = {
@@ -400,8 +382,8 @@ function stairs.register_stair_inner(
 
 		on_place = function(itemstack, placer, pointed_thing)
 
-			return stair_place(itemstack, placer, pointed_thing,
-					"stairs:stair_inner_" .. subname)
+			return stair_place(
+					itemstack, placer, pointed_thing, "stairs:stair_inner_" .. subname)
 		end,
 	})
 
@@ -428,10 +410,8 @@ function stairs.register_stair_inner(
 	minetest.register_craft({
 		output = recipeitem .. " 3",
 		recipe = {
-			{"stairs:stair_inner_" .. subname,
-					"stairs:stair_inner_" .. subname},
-			{"stairs:stair_inner_" .. subname,
-					"stairs:stair_inner_" .. subname}
+			{"stairs:stair_inner_" .. subname, "stairs:stair_inner_" .. subname},
+			{"stairs:stair_inner_" .. subname, "stairs:stair_inner_" .. subname}
 		}
 	})
 
@@ -448,7 +428,7 @@ function stairs.register_slope(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa, soun = get_node_vars(recipeitem)
+	local def = minetest.registered_nodes[recipeitem]
 
 	minetest.register_node(":stairs:slope_" .. subname, {
 		description = description,
@@ -458,11 +438,11 @@ function stairs.register_slope(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = light,
-		sunlight_propagates = propa,
+		use_texture_alpha = def.use_texture_alpha,
+		light_source = def.light_source,
+		sunlight_propagates = def.sunlight_propagates,
 		groups = new_groups,
-		sounds = snds or soun,
+		sounds = snds or def.sounds,
 		selection_box = {
 			type = "fixed",
 			fixed = {
@@ -479,8 +459,9 @@ function stairs.register_slope(
 		},
 
 		on_place = function(itemstack, placer, pointed_thing)
-			return stair_place(itemstack, placer, pointed_thing,
-					"stairs:slope_" .. subname)
+
+			return stair_place(
+					itemstack, placer, pointed_thing, "stairs:slope_" .. subname)
 		end
 	})
 
@@ -514,7 +495,7 @@ function stairs.register_slope_inner(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa, soun = get_node_vars(recipeitem)
+	local def = minetest.registered_nodes[recipeitem]
 
 	minetest.register_node(":stairs:slope_inner_" .. subname, {
 		description = description,
@@ -524,11 +505,11 @@ function stairs.register_slope_inner(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = light,
-		sunlight_propagates = propa,
+		use_texture_alpha = def.use_texture_alpha,
+		light_source = def.light_source,
+		sunlight_propagates = def.sunlight_propagates,
 		groups = new_groups,
-		sounds = snds or soun,
+		sounds = snds or def.sounds,
 		selection_box = {
 			type = "fixed",
 			fixed = {
@@ -547,8 +528,9 @@ function stairs.register_slope_inner(
 		},
 
 		on_place = function(itemstack, placer, pointed_thing)
-			return stair_place(itemstack, placer, pointed_thing,
-					"stairs:slope_inner_" .. subname)
+
+			return stair_place(
+					itemstack, placer, pointed_thing, "stairs:slope_inner_" .. subname)
 		end
 	})
 
@@ -582,7 +564,7 @@ function stairs.register_slope_outer(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa, soun = get_node_vars(recipeitem)
+	local def = minetest.registered_nodes[recipeitem]
 
 	minetest.register_node(":stairs:slope_outer_" .. subname, {
 		description = description,
@@ -592,11 +574,11 @@ function stairs.register_slope_outer(
 		paramtype = "light",
 		paramtype2 = "facedir",
 		is_ground_content = false,
-		use_texture_alpha = alpha,
-		light_source = light,
-		sunlight_propagates = propa,
+		use_texture_alpha = def.use_texture_alpha,
+		light_source = def.light_source,
+		sunlight_propagates = def.sunlight_propagates,
 		groups = new_groups,
-		sounds = snds or soun,
+		sounds = snds or def.sounds,
 		selection_box = {
 			type = "fixed",
 			fixed = {
@@ -613,8 +595,9 @@ function stairs.register_slope_outer(
 		},
 
 		on_place = function(itemstack, placer, pointed_thing)
-			return stair_place(itemstack, placer, pointed_thing,
-					"stairs:slope_outer_" .. subname)
+
+			return stair_place(
+					itemstack, placer, pointed_thing, "stairs:slope_outer_" .. subname)
 		end
 	})
 

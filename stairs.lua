@@ -314,6 +314,24 @@ stairs.register_slope(
 	stairs.glass
 )
 
+stairs.register_slope_inner(
+	"glass",
+	"default:glass",
+	tmp,
+	{face_tex},
+	"Glass Inner Slope",
+	stairs.glass
+)
+
+stairs.register_slope_outer(
+	"glass",
+	"default:glass",
+	tmp,
+	{face_tex},
+	"Glass Outer Slope",
+	stairs.glass
+)
+
 -- Obsidian Glass (stairs registered seperately to use special texture)
 
 --stairs.register_all("obsidian_glass", "default:obsidian_glass",
@@ -374,6 +392,24 @@ stairs.register_slope(
 	tmp,
 	{face_tex},
 	"Obsidian Glass Slope",
+	stairs.glass
+)
+
+stairs.register_slope_inner(
+	"obsidian_glass",
+	"default:obsidian_glass",
+	tmp,
+	{face_tex},
+	"Obsidian Glass Inner Slope",
+	stairs.glass
+)
+
+stairs.register_slope_outer(
+	"obsidian_glass",
+	"default:obsidian_glass",
+	tmp,
+	{face_tex},
+	"Obsidian Glass Outer Slope",
 	stairs.glass
 )
 
