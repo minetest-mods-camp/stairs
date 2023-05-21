@@ -132,13 +132,12 @@ end
 -- get node settings to use for stairs
 local function get_node_vars(nodename)
 
-	local def = minetest.registered_nodes[nodename]
+	local def = minetest.registered_nodes[nodename] or {}
 
-	if def then
-		return def.light_source, def.use_texture_alpha, def.sunlight_propagates
-	end
-
-	return nil, nil, nil
+	return 	def.light_source,
+			def.use_texture_alpha,
+			def.sunlight_propagates,
+			def.sounds
 end
 
 
@@ -168,7 +167,7 @@ function stairs.register_stair(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa = get_node_vars(recipeitem)
+	local light, alpha, propa, soun = get_node_vars(recipeitem)
 
 	minetest.register_node(":stairs:stair_" .. subname, {
 		description = description,
@@ -181,7 +180,7 @@ function stairs.register_stair(
 		light_source = light,
 		sunlight_propagates = propa,
 		groups = new_groups,
-		sounds = snds,
+		sounds = snds or soun,
 		node_box = {
 			type = "fixed",
 			fixed = {
@@ -243,7 +242,7 @@ function stairs.register_slab(
 
 	new_groups.slab = 1
 
-	local light, alpha, propa = get_node_vars(recipeitem)
+	local light, alpha, propa, soun = get_node_vars(recipeitem)
 
 	minetest.register_node(":stairs:slab_" .. subname, {
 		description = description,
@@ -256,7 +255,7 @@ function stairs.register_slab(
 		light_source = light,
 		sunlight_propagates = propa,
 		groups = new_groups,
-		sounds = snds,
+		sounds = snds or soun,
 		node_box = {
 			type = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5}
@@ -304,7 +303,7 @@ function stairs.register_stair_outer(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa = get_node_vars(recipeitem)
+	local light, alpha, propa, soun = get_node_vars(recipeitem)
 
 	minetest.register_node(":stairs:stair_outer_" .. subname, {
 		description = fdesc or "Outer " .. description,
@@ -317,7 +316,7 @@ function stairs.register_stair_outer(
 		light_source = light,
 		sunlight_propagates = propa,
 		groups = new_groups,
-		sounds = snds,
+		sounds = snds or soun,
 		node_box = {
 			type = "fixed",
 			fixed = {
@@ -376,7 +375,7 @@ function stairs.register_stair_inner(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa = get_node_vars(recipeitem)
+	local light, alpha, propa, soun = get_node_vars(recipeitem)
 
 	minetest.register_node(":stairs:stair_inner_" .. subname, {
 		description = fdesc or "Inner " .. description,
@@ -389,7 +388,7 @@ function stairs.register_stair_inner(
 		light_source = light,
 		sunlight_propagates = propa,
 		groups = new_groups,
-		sounds = snds,
+		sounds = snds or soun,
 		node_box = {
 			type = "fixed",
 			fixed = {
@@ -449,7 +448,7 @@ function stairs.register_slope(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa = get_node_vars(recipeitem)
+	local light, alpha, propa, soun = get_node_vars(recipeitem)
 
 	minetest.register_node(":stairs:slope_" .. subname, {
 		description = description,
@@ -463,7 +462,7 @@ function stairs.register_slope(
 		light_source = light,
 		sunlight_propagates = propa,
 		groups = new_groups,
-		sounds = snds,
+		sounds = snds or soun,
 		selection_box = {
 			type = "fixed",
 			fixed = {
@@ -515,7 +514,7 @@ function stairs.register_slope_inner(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa = get_node_vars(recipeitem)
+	local light, alpha, propa, soun = get_node_vars(recipeitem)
 
 	minetest.register_node(":stairs:slope_inner_" .. subname, {
 		description = description,
@@ -529,7 +528,7 @@ function stairs.register_slope_inner(
 		light_source = light,
 		sunlight_propagates = propa,
 		groups = new_groups,
-		sounds = snds,
+		sounds = snds or soun,
 		selection_box = {
 			type = "fixed",
 			fixed = {
@@ -583,7 +582,7 @@ function stairs.register_slope_outer(
 
 	new_groups.stair = 1
 
-	local light, alpha, propa = get_node_vars(recipeitem)
+	local light, alpha, propa, soun = get_node_vars(recipeitem)
 
 	minetest.register_node(":stairs:slope_outer_" .. subname, {
 		description = description,
@@ -597,7 +596,7 @@ function stairs.register_slope_outer(
 		light_source = light,
 		sunlight_propagates = propa,
 		groups = new_groups,
-		sounds = snds,
+		sounds = snds or soun,
 		selection_box = {
 			type = "fixed",
 			fixed = {
