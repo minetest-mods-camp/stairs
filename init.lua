@@ -152,7 +152,7 @@ function stairs.register_stair(
 
 	new_groups.stair = 1
 
-	local def = minetest.registered_nodes[recipeitem]
+	local def = minetest.registered_nodes[recipeitem] or {}
 
 	minetest.register_node(":stairs:stair_" .. subname, {
 		description = description,
@@ -226,7 +226,7 @@ function stairs.register_slab(
 
 	new_groups.slab = 1
 
-	local def = minetest.registered_nodes[recipeitem]
+	local def = minetest.registered_nodes[recipeitem] or {}
 
 	minetest.register_node(":stairs:slab_" .. subname, {
 		description = description,
@@ -287,7 +287,7 @@ function stairs.register_stair_outer(
 
 	new_groups.stair = 1
 
-	local def = minetest.registered_nodes[recipeitem]
+	local def = minetest.registered_nodes[recipeitem] or {}
 
 	minetest.register_node(":stairs:stair_outer_" .. subname, {
 		description = fdesc or "Outer " .. description,
@@ -357,7 +357,7 @@ function stairs.register_stair_inner(
 
 	new_groups.stair = 1
 
-	local def = minetest.registered_nodes[recipeitem]
+	local def = minetest.registered_nodes[recipeitem] or {}
 
 	minetest.register_node(":stairs:stair_inner_" .. subname, {
 		description = fdesc or "Inner " .. description,
@@ -428,7 +428,7 @@ function stairs.register_slope(
 
 	new_groups.stair = 1
 
-	local def = minetest.registered_nodes[recipeitem]
+	local def = minetest.registered_nodes[recipeitem] or {}
 
 	minetest.register_node(":stairs:slope_" .. subname, {
 		description = description,
@@ -495,7 +495,7 @@ function stairs.register_slope_inner(
 
 	new_groups.stair = 1
 
-	local def = minetest.registered_nodes[recipeitem]
+	local def = minetest.registered_nodes[recipeitem] or {}
 
 	minetest.register_node(":stairs:slope_inner_" .. subname, {
 		description = description,
@@ -564,7 +564,7 @@ function stairs.register_slope_outer(
 
 	new_groups.stair = 1
 
-	local def = minetest.registered_nodes[recipeitem]
+	local def = minetest.registered_nodes[recipeitem] or {}
 
 	minetest.register_node(":stairs:slope_outer_" .. subname, {
 		description = description,

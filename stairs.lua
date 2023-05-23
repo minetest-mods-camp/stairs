@@ -18,7 +18,7 @@ stairs.register_all("junglewood", "default:junglewood",
 	stairs.wood, false)
 
 stairs.register_all("pine_wood", "default:pinewood",
-	{choppy = 3, oddly_breakable_by_hand = 1, flammable = 3},
+	{choppy = 3, oddly_breakable_by_hand = 2, flammable = 3},
 	{"default_pine_wood.png"},
 	"Pine Wood",
 	stairs.wood, false)
@@ -28,7 +28,7 @@ minetest.register_alias("stairs:stair_pinewood", "stairs:stair_pine_wood")
 minetest.register_alias("stairs:slab_pinewood", "stairs:slab_pine_wood")
 
 stairs.register_all("acacia_wood", "default:acacia_wood",
-	{choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+	{choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	{"default_acacia_wood.png"},
 	"Acacia Wood",
 	stairs.wood, false)
